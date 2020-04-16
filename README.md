@@ -7,4 +7,4 @@ Durante la partida, en el caso en que se quiera terminar, podemos pulsar la tecl
 
 ## Aclaraciones:
 
-Este juego para ordenador es una copia de un juego ya existente. Se ha realizado con la finalidad de entrener y poder disfrutar de una forma virtual del Código Secreto, pero bajo ningún caso con el fin de generar un beneficio monetario, con lo cual todo aquel que se lo descargue es libre de modificarlo, utilizarlo y difundirlo pero siempre teniendo en mente esta idea en mente. 
+Este juego para ordenador es una copia de un juego ya existente. Se ha realizado con la finalidad de entrener y poder disfrutar de una forma virtual del Código Secreto, pero bajo ningún caso con el fin de generar un beneficio monetario, con lo cual todo aquel que se lo descargue es libre de modificarlo, utilizarlo y difundirlo pero siempre teniendo en mente esta idea. 
