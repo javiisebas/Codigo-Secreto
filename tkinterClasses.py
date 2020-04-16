@@ -86,7 +86,7 @@ class mainAppWin():
             if self.txtAdd.get() in self.words:
                 messagebox.showinfo(message="Esta palabra ya existe", title="Mensaje de advertencia")
             else:
-                listaEscribe = open('/palabras.txt', mode="a+", encoding="utf-8")
+                listaEscribe = open('palabras.txt', mode="a+", encoding="utf-8")
                 listaEscribe.write(self.txtAdd.get())
                 listaEscribe.close()  
 
