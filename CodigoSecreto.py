@@ -13,7 +13,6 @@ yResolution = DameCorreos.yRes
 
 res = xResolution, yResolution
 
-
 decision = True
 while decision:
 
@@ -23,7 +22,7 @@ while decision:
     
     if len(DameCorreos.mails) > 0:
 
-        enviaCorreo(DameCorreos.mails, ) 
+        enviaCorreo(DameCorreos.mails) 
         remove('patron.png')
         palabras_juego = wordsList()  
 
@@ -33,7 +32,7 @@ while decision:
         win = pygame.display.set_mode(res)
         pygame.key.set_mods(0) 
  
-        icon = pygame.image.load('icon/icon.png')
+        icon = pygame.image.load('icon.png')
         pygame.display.set_icon(icon)
         pygame.display.set_caption("Código Secreto")
 
@@ -54,7 +53,7 @@ while decision:
                 Palabras.draw(win, Victoria, original_matrix, palabras_juego)
                 Malla.draw(win)
                 Muerto.draw(win, Victoria, Matriz, original_matrix)
-                Victoria.draw(win, Matriz, original_matrix)
+                Victoria.draw(win, Matriz, original_matrix, Muerto)
             Salir.draw(win)
 
             pygame.display.update()
@@ -70,8 +69,7 @@ while decision:
 
         pygame.quit()
 
-        Pregunta = preguntar()
-        decision = Pregunta.decision
+        decision = Salir.decision
 
     else:
         remove('patron.png')

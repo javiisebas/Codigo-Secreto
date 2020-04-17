@@ -14,7 +14,7 @@ class mainAppWin():
         self.xRes = self.window.winfo_screenwidth()
         self.yRes = self.window.winfo_screenheight()
 
-        self.dir = 'icon/icon.png'
+        self.dir = 'icon.png'
         self.imgicon = tk.PhotoImage(file=self.dir)
         self.window.tk.call('wm', 'iconphoto', self.window._w, self.imgicon) 
 
@@ -106,48 +106,4 @@ class mainAppWin():
         else:
             messagebox.showinfo(message="A jugar!", title="Mensaje de advertencia")
             self.window.destroy()
-
-
-
-class preguntar():
-    def __init__(self):
-
-        self.window = tk.Tk()
-        self.window.geometry('500x180')
-        self.window.title('Seguir jugando')
-
-        self.dir = 'icon/icon.png'
-        self.imgicon = tk.PhotoImage(file=self.dir)
-        self.window.tk.call('wm', 'iconphoto', self.window._w, self.imgicon)
-
-        self.lbl = tk.Label(self.window, text="Seguir jugando")
-        self.lbl.place(x=50, y=20)
-        self.lbl.config(font=("Verdana",18,"bold"))
-
-        self.lblText = tk.Label(self.window, text="¿Deseas seguir jugango con los mismos correos?")
-        self.lblText.place(x=60, y=70)
-        self.lblText.config(font=("Verdana",11))
-
-        self.btnEnviar = tk.Button(self.window, text="No", command=self.no, width=15) 
-        self.btnEnviar.place(x=60, y=110)
-        self.btnEnviar.config(font=("Verdana",11))
-
-        self.btnAdd = tk.Button(self.window, text="Si", command=self.si, width=15) 
-        self.btnAdd.place(x=286, y=110)
-        self.btnAdd.config(font=("Verdana",11))
-
-        self.decision = True
-
-        self.window.mainloop()
-
-
-    def no(self):
-
-        self.decision = False
-        self.window.destroy()
-
-
-    def si(self):
-
-        self.window.destroy()
 

@@ -1,8 +1,8 @@
 import os
 import smtplib
 from os import remove
+import base64
 from email.message import EmailMessage
-
 
 def enviaCorreo(correos):
     emisor = 'jsf.codigo.secreto@gmail.com'

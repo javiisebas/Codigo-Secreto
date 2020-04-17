@@ -3,6 +3,7 @@ with contextlib.redirect_stdout(None):
     import pygame
     from pygame.locals import *
 
+import time
 import numpy as np
 
 
@@ -157,6 +158,8 @@ class muerto(object):
             cuadroTexto(win,60,(153,163,164),(0,self.yRes//2),(self.xRes, self.yRes//2)
                 ,'PALABRAS',(0,0,0),(self.xRes1,self.yRes2))
 
+            Matriz.matriz = original_matrix
+
             self.ratonX = pygame.mouse.get_pos()[0]
             self.ratonY = pygame.mouse.get_pos()[1]
 
@@ -166,7 +169,6 @@ class muerto(object):
                         ,'PALABRAS',(245,222,179),(self.xRes1,self.yRes2))
 
                     if pygame.mouse.get_pressed()[0]:
-                        Matriz.matriz = original_matrix
                         Victoria.verPalabras = True
 
 
@@ -175,6 +177,7 @@ class victoria(object):
     def __init__(self, res):
 
         self.fin = False
+        self.res = res
         self.xRes = res[0]
         self.yRes = 9 * res[1]//10
         self.xRes1 = self.xRes//2
@@ -182,20 +185,22 @@ class victoria(object):
         self.yRes2 = 2*self.yRes//3
         self.verPalabras = False
 
-    def draw(self,win,Matriz,original_matrix):
+    def draw(self,win,Matriz,original_matrix,Muerto):
 
-        self.unique, self.counts = np.unique(Matriz.matriz,return_counts=True)
-        self.valores = dict(zip(self.unique,self.counts))
+        if Muerto.vivo:
+            self.unique, self.counts = np.unique(Matriz.matriz,return_counts=True)
+            self.valores = dict(zip(self.unique,self.counts))
 
-        if 2 in self.valores.keys():
-            if self.valores[2] == 9:
-                self.fin = True
-                self.colorFin = (220,20,60)
+        if not(self.fin):
+            if 2 in self.valores.keys():
+                if self.valores[2] == 9:
+                    self.fin = True
+                    self.colorFin = (220,20,60)
 
-        if 3 in self.valores.keys():
-            if self.valores[3] == 8:
-                self.fin = True
-                self.colorFin = (0,178,238)
+            if 3 in self.valores.keys():
+                if self.valores[3] == 8:
+                    self.fin = True
+                    self.colorFin = (0,178,238)
 
         if self.fin == True and self.verPalabras == False: 
 
@@ -203,6 +208,8 @@ class victoria(object):
                 ,'GANADOR',(0,0,0),(self.xRes1,self.yRes1))
             cuadroTexto(win,60,self.colorFin,(0,self.yRes//2),(self.xRes, self.yRes//2)
                 ,'PALABRAS',(0,0,0),(self.xRes1,self.yRes2))
+
+            Matriz.matriz = original_matrix
 
             self.ratonX = pygame.mouse.get_pos()[0]
             self.ratonY = pygame.mouse.get_pos()[1]
@@ -213,7 +220,6 @@ class victoria(object):
                         ,'PALABRAS',(245,222,179),(self.xRes1,self.yRes2))
 
                     if pygame.mouse.get_pressed()[0]:
-                        Matriz.matriz = original_matrix
                         self.verPalabras = True
 
 
@@ -226,17 +232,33 @@ class salir(object):
         self.xRes1 = self.xRes//2
         self.yRes1 = 19*self.yRes//20
         self.run = True
+        self.decision = True
 
     def draw(self, win):
-        cuadroTexto(win,50,(0,0,0),(0,self.yRes*0.895),(self.xRes,self.yRes)
-                ,'SALIR',(245,222,179),(self.xRes1,self.yRes1))
+        cuadroTexto(win,50,(0,0,0),(0,self.yRes*0.895),(self.xRes1,0.15*self.yRes)
+                ,'NUEVO JUEGO',(245,222,179),(self.xRes1//2,self.yRes1))
+        cuadroTexto(win,50,(0,0,0),(self.xRes1,self.yRes*0.895),(self.xRes1,0.15*self.yRes)
+                ,'SALIR',(245,222,179),(3*self.xRes1//2,self.yRes1))
 
         self.ratonX = pygame.mouse.get_pos()[0]
         self.ratonY = pygame.mouse.get_pos()[1]
 
         if self.ratonY > 0.895*self.yRes and self.ratonY < self.yRes:
-            cuadroTexto(win,50,(153,163,164),(0,self.yRes*0.898),(self.xRes,self.yRes)
-                ,'SALIR',(0,0,0),(self.xRes1,self.yRes1))
+            if self.ratonX < self.xRes1:
 
-            if pygame.mouse.get_pressed()[0]:
-                self.run = False
+                cuadroTexto(win,50,(153,163,164),(0,self.yRes*0.895),(self.xRes1,0.15*self.yRes)
+                    ,'NUEVO JUEGO',(0,0,0),(self.xRes1//2,self.yRes1))
+                if pygame.mouse.get_pressed()[0]:
+                    self.run = False
+
+
+        if self.ratonY > 0.895*self.yRes and self.ratonY < self.yRes:
+            if self.ratonX > self.xRes1:
+
+                cuadroTexto(win,50,(153,163,164),(self.xRes1,self.yRes*0.895),(self.xRes1,0.15*self.yRes)
+                    ,'SALIR',(0,0,0),(3*self.xRes1//2,self.yRes1))
+                if pygame.mouse.get_pressed()[0]:
+                    self.run = False
+                    self.decision = False
+
+        pygame.draw.rect(win,(0,0,0),pygame.Rect((0,0.895*self.yRes),(self.xRes,0.002*self.yRes)))
