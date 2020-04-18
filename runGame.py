@@ -233,6 +233,7 @@ class salir(object):
         self.yRes1 = 19*self.yRes//20
         self.run = True
         self.decision = True
+        self.reiniciar = True
 
     def draw(self, win):
         cuadroTexto(win,50,(0,0,0),(0,self.yRes*0.895),(self.xRes1,0.15*self.yRes)
@@ -249,7 +250,7 @@ class salir(object):
                 cuadroTexto(win,50,(153,163,164),(0,self.yRes*0.895),(self.xRes1,0.15*self.yRes)
                     ,'NUEVO JUEGO',(0,0,0),(self.xRes1//2,self.yRes1))
                 if pygame.mouse.get_pressed()[0]:
-                    self.run = False
+                    self.reiniciar = True
 
 
         if self.ratonY > 0.895*self.yRes and self.ratonY < self.yRes:
@@ -262,3 +263,16 @@ class salir(object):
                     self.decision = False
 
         pygame.draw.rect(win,(0,0,0),pygame.Rect((0,0.895*self.yRes),(self.xRes,0.002*self.yRes)))
+
+
+
+class cargando(object):
+    def __init__(self, res):
+        self.xRes = res[0]
+        self.yRes = 0.9 * res[1]
+        self.msg = "CARGANDO"
+
+    def draw(self, win):
+        cuadroTexto(win,150,(245,222,179),(0,0),(self.xRes,self.yRes)
+                    ,self.msg,(0,0,0),(self.xRes//2,self.yRes//2))
+        

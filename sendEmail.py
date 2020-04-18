@@ -22,7 +22,6 @@ def enviaCorreo(correos):
     </html>
     '''
 
-
     msg = EmailMessage()
     msg['Subject'] = 'Patrón del juego'
     msg['From'] = emisor
@@ -40,5 +39,3 @@ def enviaCorreo(correos):
     mailServer.login(emisor,password)
     mailServer.sendmail(emisor,correos, msg.as_string())
     mailServer.close() 
-
-
