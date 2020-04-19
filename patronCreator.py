@@ -40,7 +40,7 @@ class patronGen():
         fig, ax = plt.subplots(figsize=(10,10))
         
         ax.imshow(self.original_matrix.transpose(),cmap=self.cmap, norm=self.norm)
-        ax.tick_params(axis=u'both', which=u'both',length=0)
+        ax.tick_params(axis=u"both", which=u"both",length=0)
         ax.axes.get_xaxis().set_visible(False)
         ax.axes.get_yaxis().set_visible(False)
 
@@ -48,6 +48,6 @@ class patronGen():
             ax.axvline(0.49 + i,c = "black",linewidth = 0.8)
             ax.axhline(0.49 + i,c = "black",linewidth = 0.8)
 
-        plt.savefig('./data/patron.png')
+        plt.savefig("./data/patron.png")
         plt.close(fig)
 

@@ -10,7 +10,7 @@ import numpy as np
 
 
 def cuadroTexto(win,tam,color,pos,tamRect,text,colorText,posText):
-        fontPal = pygame.font.SysFont('calibri', tam)
+        fontPal = pygame.font.SysFont("calibri", tam)
         pygame.draw.rect(win,color,pygame.Rect(pos,tamRect))
 
         textPal = fontPal.render(text, True, colorText)
@@ -58,7 +58,7 @@ class palabras(object):
     def draw(self,win,Victoria,original_matrix,palabras_juego):
 
         self.muertePal = np.where(original_matrix == 4)
-        font = pygame.font.SysFont('calibri', 40)
+        font = pygame.font.SysFont("calibri", 40)
 
         while self.x < self.xRes:
             while self.y < self.yRes: 
@@ -154,9 +154,9 @@ class muerto(object):
         if self.vivo == False and Victoria.verPalabras == False:
 
             cuadroTexto(win,100,(153,163,164),(0,0),self.res
-                ,'GAME OVER',(0,0,0),(self.xRes1,self.yRes1))
+                ,"GAME OVER",(0,0,0),(self.xRes1,self.yRes1))
             cuadroTexto(win,60,(153,163,164),(0,self.yRes//2),(self.xRes, self.yRes//2)
-                ,'PALABRAS',(0,0,0),(self.xRes1,self.yRes2))
+                ,"PALABRAS",(0,0,0),(self.xRes1,self.yRes2))
 
             Matriz.matriz = original_matrix
 
@@ -166,7 +166,7 @@ class muerto(object):
             if self.ratonX > self.xRes1-115 and self.ratonX < self.xRes1+115:
                 if self.ratonY > self.yRes2-25 and self.ratonY < self.yRes2+25:
                     cuadroTexto(win,60,(153,163,164),(0,self.yRes//2),(self.xRes, self.yRes//2)
-                        ,'PALABRAS',(245,222,179),(self.xRes1,self.yRes2))
+                        ,"PALABRAS",(245,222,179),(self.xRes1,self.yRes2))
 
                     if pygame.mouse.get_pressed()[0]:
                         Victoria.verPalabras = True
@@ -205,9 +205,9 @@ class victoria(object):
         if self.fin == True and self.verPalabras == False: 
 
             cuadroTexto(win,100,self.colorFin,(0,0),self.res
-                ,'GANADOR',(0,0,0),(self.xRes1,self.yRes1))
+                ,"GANADOR",(0,0,0),(self.xRes1,self.yRes1))
             cuadroTexto(win,60,self.colorFin,(0,self.yRes//2),(self.xRes, self.yRes//2)
-                ,'PALABRAS',(0,0,0),(self.xRes1,self.yRes2))
+                ,"PALABRAS",(0,0,0),(self.xRes1,self.yRes2))
 
             Matriz.matriz = original_matrix
 
@@ -217,7 +217,7 @@ class victoria(object):
             if self.ratonX > self.xRes1-115 and self.ratonX < self.xRes1+115:
                 if self.ratonY > self.yRes2-25 and self.ratonY < self.yRes2+25:
                     cuadroTexto(win,60,self.colorFin,(0,self.yRes//2),(self.xRes, self.yRes//2)
-                        ,'PALABRAS',(245,222,179),(self.xRes1,self.yRes2))
+                        ,"PALABRAS",(245,222,179),(self.xRes1,self.yRes2))
 
                     if pygame.mouse.get_pressed()[0]:
                         self.verPalabras = True
@@ -237,9 +237,9 @@ class salir(object):
 
     def draw(self, win):
         cuadroTexto(win,50,(0,0,0),(0,self.yRes*0.895),(self.xRes1,0.15*self.yRes)
-                ,'NUEVO JUEGO',(245,222,179),(self.xRes1//2,self.yRes1))
+                ,"NUEVO JUEGO",(245,222,179),(self.xRes1//2,self.yRes1))
         cuadroTexto(win,50,(0,0,0),(self.xRes1,self.yRes*0.895),(self.xRes1,0.15*self.yRes)
-                ,'SALIR',(245,222,179),(3*self.xRes1//2,self.yRes1))
+                ,"SALIR",(245,222,179),(3*self.xRes1//2,self.yRes1))
 
         self.ratonX = pygame.mouse.get_pos()[0]
         self.ratonY = pygame.mouse.get_pos()[1]
@@ -248,7 +248,7 @@ class salir(object):
             if self.ratonX < self.xRes1:
 
                 cuadroTexto(win,50,(153,163,164),(0,self.yRes*0.895),(self.xRes1,0.15*self.yRes)
-                    ,'NUEVO JUEGO',(0,0,0),(self.xRes1//2,self.yRes1))
+                    ,"NUEVO JUEGO",(0,0,0),(self.xRes1//2,self.yRes1))
                 if pygame.mouse.get_pressed()[0]:
                     self.reiniciar = True
 
@@ -257,7 +257,7 @@ class salir(object):
             if self.ratonX > self.xRes1:
 
                 cuadroTexto(win,50,(153,163,164),(self.xRes1,self.yRes*0.895),(self.xRes1,0.15*self.yRes)
-                    ,'SALIR',(0,0,0),(3*self.xRes1//2,self.yRes1))
+                    ,"SALIR",(0,0,0),(3*self.xRes1//2,self.yRes1))
                 if pygame.mouse.get_pressed()[0]:
                     self.run = False
                     self.decision = False

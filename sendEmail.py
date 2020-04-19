@@ -5,8 +5,8 @@ import base64
 from email.message import EmailMessage
 
 def enviaCorreo(correos):
-    emisor = 'jsf.codigo.secreto@gmail.com'
-    password = 'passwordprueba5'
+    emisor = "jsf.codigo.secreto@gmail.com"
+    name_x = "passwordprueba5"
 
     messageText = ''' 
     <doctype !html>
@@ -23,19 +23,19 @@ def enviaCorreo(correos):
     '''
 
     msg = EmailMessage()
-    msg['Subject'] = 'Patrón del juego'
-    msg['From'] = emisor
-    msg['To'] = correos
-    msg.add_alternative(messageText, subtype='html')
+    msg["Subject"] = "Patrón del juego"
+    msg["From"] = emisor
+    msg["To"] = correos
+    msg.add_alternative(messageText, subtype="html")
 
-    fp =  open('./data/patron.png', 'rb') 
+    fp =  open("./data/patron.png", "rb") 
     img_data = fp.read()
-    msg.add_attachment(img_data, maintype = 'png',subtype = 'pdf', filename = 'patron.png')
+    msg.add_attachment(img_data, maintype = "png",subtype = "pdf", filename = "patron.png")
 
-    mailServer = smtplib.SMTP('smtp.gmail.com',587)
+    mailServer = smtplib.SMTP("smtp.gmail.com",587)
     mailServer.ehlo()
     mailServer.starttls()
     mailServer.ehlo()
-    mailServer.login(emisor,password)
+    mailServer.login(emisor,name_x)
     mailServer.sendmail(emisor,correos, msg.as_string())
     mailServer.close() 
