@@ -28,7 +28,7 @@ def enviaCorreo(correos):
     msg['To'] = correos
     msg.add_alternative(messageText, subtype='html')
 
-    fp =  open('patron.png', 'rb') 
+    fp =  open('./data/patron.png', 'rb') 
     img_data = fp.read()
     msg.add_attachment(img_data, maintype = 'png',subtype = 'pdf', filename = 'patron.png')
 

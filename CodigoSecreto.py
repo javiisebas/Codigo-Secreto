@@ -7,7 +7,7 @@ from wordsListCreator import *
 
 os.environ['SDL_VIDEO_WINDOW_POS'] = '%d,%d' % (0, 0)
 
-DameCorreos = mainAppWin()
+DameCorreos = mainAppWin(MsgBox)
 xResolution = DameCorreos.xRes
 yResolution = DameCorreos.yRes
 
@@ -22,7 +22,7 @@ def generaInfo(mails, palabras_repetidas):
     original_matrix = patron_generator.original_matrix
 
     enviaCorreo(mails) 
-    remove('patron.png')
+    remove('./data/patron.png')
     palabras_juego = wordsList(palabras_repetidas)
 
     return original_matrix, palabras_juego
@@ -38,7 +38,7 @@ while decision:
         win = pygame.display.set_mode(res)
         pygame.key.set_mods(0) 
  
-        icon = pygame.image.load('icon.png')
+        icon = pygame.image.load('./data/icon.png')
         pygame.display.set_icon(icon)
         pygame.display.set_caption("Código Secreto")
 
@@ -67,6 +67,9 @@ while decision:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
+                elif event.type == KEYDOWN:
+                    if event.key == K_ESCAPE:
+                        pygame.display.iconify()
 
             redrawWin()
 

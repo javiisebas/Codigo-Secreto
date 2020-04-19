@@ -5,7 +5,7 @@ import random as rd
 
 def wordsList(palabras_repetidas):
 	
-	lista = io.open('palabras.txt', mode="r", encoding="utf-8")
+	lista = io.open('./data/palabras.txt', mode="r", encoding="utf-8")
 	palabras = lista.read().split('\n')[:-1]
 	tam = len(palabras) - 1
 	palabras_juego = []

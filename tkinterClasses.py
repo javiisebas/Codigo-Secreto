@@ -1,82 +1,129 @@
 import tkinter as tk
+from tkinter import *
 from tkinter import messagebox
+from tkinter import font
 
 import io
 import os
 
+class MsgBox(Toplevel):
+    def __init__(self, title=" ", message=" "):
+        Toplevel.__init__(self)
+
+        self.title(title)
+        
+        self.font = font.Font(size=11)
+        self.label = Label(self, text=message, font = self.font)
+        self.label['bg'] = 'white'
+        self.label.pack(ipadx=50, ipady=10, fill='both', expand=True)
+
+        self.button = Button(self, text="Close")
+        self.button['command'] = self.destroy
+        self.button.pack(pady=10, padx=10, ipadx=20, side='left')
+
 
 class mainAppWin():
-    def __init__(self):
+    def __init__(self, MsgBox):
  
         self.window = tk.Tk()
-        self.window.geometry('479x490') 
+        self.window.geometry('580x545') 
         self.window.title('Menú Codigo Secreto')
         self.xRes = self.window.winfo_screenwidth()
         self.yRes = self.window.winfo_screenheight()
 
-        self.dir = 'icon.png'
+        self.dir = './data/icon.png'
         self.imgicon = tk.PhotoImage(file=self.dir)
         self.window.tk.call('wm', 'iconphoto', self.window._w, self.imgicon) 
 
         self.mails = []
-        self.list_words = io.open('palabras.txt', mode="r", encoding="utf-8")
+        self.list_words = io.open('./data/palabras.txt', mode="r", encoding="utf-8")
         self.words = self.list_words.read().split('\n')
         self.tam = len(self.words) - 1
 
-        self.lbl = tk.Label(self.window, text="Correos")
-        self.lbl.place(x=50, y=20)
-        self.lbl.config(font=("Verdana",18,"bold"))
-
-        self.text = ["Escribe  tu correo en  el siguiente recuadro y dale",
-                      "a INCLUIR. Introduce  tantos correos como jefes ",
-                      "espías, y cuando hayas terminado dale a ENVIAR ",
-                      "y se os hará llegar el patrón del juego. "]
-        self.y = 75
-
-        for Text in self.text:
-            self.lblText = tk.Label(self.window, text=Text)
-            self.lblText.place(x=50, y=self.y)
-            self.lblText.config(font=("Verdana",11))
-            self.y += 20
-        
         self.lbl = tk.Label(self.window, text="Palabras")
-        self.lbl.place(x=50, y=255)
+        self.lbl.place(x=70, y=30)
         self.lbl.config(font=("Verdana",18,"bold"))        
         
-        self.text = ["Si deseas añadir más palabra a la lista del juego.",
-                    "Escribe la palabra en el siguiete recuadro y pulsa",
-                    "el botón de añadir:"]
-        self.y = 310
+        self.text = ["Si deseas añadir más palabras a la lista del juego escribe lo que",
+                     "quieras incorporar en el siguiete recuadro y pulsa el botón."]
+        self.y = 80
 
         for Text in self.text:
             self.Text = tk.Label(self.window, text = Text)
-            self.Text.place(x=50, y=self.y)
+            self.Text.place(x=55, y=self.y)
             self.Text.config(font=("Verdana",11))
-            self.y += 20
+            self.y += 22
 
-        self.txtAdd = tk.Entry(self.window,width=37)
-        self.txtAdd.place(x=52, y=385)
+        self.txtAdd = tk.Entry(self.window,width=32)
+        self.txtAdd.place(x=60, y=143)
         self.txtAdd.config(font=("Verdana",11)) 
         
-        self.btnAdd = tk.Button(self.window, text="Añadir", command=self.add, width = 40) 
-        self.btnAdd.place(x=53, y=425)
+        self.btnAdd = tk.Button(self.window, text="Añadir", bg="#F5DEB3", command=self.add, width = 13) 
+        self.btnAdd.place(x=400, y=138)
         self.btnAdd.config(font=("Verdana",11))
-        
-            
-        self.txt = tk.Entry(self.window,width=36)
-        self.txt.place(x=52, y=165)
-        self.txt.config(font=("Verdana",11))
-        
-        self.btnEnviar = tk.Button(self.window, text="Enviar", command=self.enviar, width = 17) 
-        self.btnEnviar.place(x=51, y=205)
-        self.btnEnviar.config(font=("Verdana",11))
 
-        self.btnIncluir = tk.Button(self.window, text="Incluir", command=self.incluir, width = 17) 
-        self.btnIncluir.place(x=252, y=205)
+
+
+        self.lbl = tk.Label(self.window, text="Correos")
+        self.lbl.place(x=70, y=200)
+        self.lbl.config(font=("Verdana",18,"bold"))
+
+        self.text = ["Escribe tu dirección de correo en el siguiente recuadro y dale al",
+                     "botón 'Incluir', introduce  tantos  correos como jefes espías. Si",
+                     "quieres ver los correo que ya has estan añadidos dale al botón",
+                     "'Ver Correos' y si te has equivocado, dale al botón de 'Eliminar'",
+                     "Finalmente para  que se os haga llegar el patrón del juego dale",
+                     "al botón de 'Comenzar Juego'."]
+        self.y = 250
+
+        for Text in self.text:
+            self.lblText = tk.Label(self.window, text=Text)
+            self.lblText.place(x=55, y=self.y)
+            self.lblText.config(font=("Verdana",11))
+            self.y += 22      
+            
+        self.txt = tk.Entry(self.window,width=32)
+        self.txt.place(x=60, y=403)
+        self.txt.config(font=("Verdana",11))
+
+        self.btnIncluir = tk.Button(self.window, text="Incluir", bg="#F5DEB3", command=self.incluir, width = 13) 
+        self.btnIncluir.place(x=400, y=398)
         self.btnIncluir.config(font=("Verdana",11))
+        
+        self.btnVer = tk.Button(self.window, text="Ver Correos", bg="#F5DEB3", command=self.ver, width = 14) 
+        self.btnVer.place(x=60, y=450)
+        self.btnVer.config(font=("Verdana",11))
+
+        self.btnIncluir = tk.Button(self.window, text="Eliminar", bg="#F5DEB3", command=self.eliminar, width = 14) 
+        self.btnIncluir.place(x=212, y=450)
+        self.btnIncluir.config(font=("Verdana",11))
+
+        self.btnEnviar = tk.Button(self.window, text="Comenzar Juego", bg="red", fg="white", command=self.enviar, width = 17) 
+        self.btnEnviar.place(x=365, y=450)
+        self.btnEnviar.config(font=("Verdana",11))
         
         self.window.mainloop()
         
+
+    def eliminar(self):
+        decision = messagebox.askyesno(message="¿Está seguro de añadir \neliminar los correo ?" 
+                               , title="Eliminar Correos")
+        if decision:
+            self.mails = []
+
+    def ver(self):
+        global MsgBox
+
+        message = ""
+        counter = 1
+        if len(self.mails) == 0:
+            message = "Ningún correo ha sido incluido"
+        else:
+            for mail in self.mails: # 
+                message += ("\n"+str(counter)+".  "+mail) 
+                counter += 1
+            
+        msg = MsgBox("Attached files", message) 
 
     def add(self):
 
@@ -86,7 +133,7 @@ class mainAppWin():
             if self.txtAdd.get() in self.words:
                 messagebox.showinfo(message="Esta palabra ya existe", title="Mensaje de advertencia")
             else:
-                listaEscribe = open('palabras.txt', mode="a+", encoding="utf-8")
+                listaEscribe = open('./data/palabras.txt', mode="a+", encoding="utf-8")
                 listaEscribe.write(self.txtAdd.get())
                 listaEscribe.close()  
 
@@ -96,8 +143,15 @@ class mainAppWin():
     def incluir(self):
 
         if self.txt.get() != "":
-            self.mails.append(self.txt.get())
-            self.txt.delete(0, 'end')
+            if self.txt.get() not in self.mails:
+
+                self.mails.append(self.txt.get())
+                self.txt.delete(0, 'end')
+
+            else:
+                messagebox.showinfo(message="El correo ya ha sido incluido", title="Mensaje de advertencia")
+        else:
+            messagebox.showinfo(message="El correo introducido no es válido", title="Mensaje de advertencia")
 
 
     def enviar(self):
