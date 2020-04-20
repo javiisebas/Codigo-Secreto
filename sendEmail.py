@@ -1,7 +1,6 @@
 import os
 import smtplib
 from os import remove
-import base64
 from email.message import EmailMessage
 
 def enviaCorreo(correos):
@@ -28,7 +27,7 @@ def enviaCorreo(correos):
     msg["To"] = correos
     msg.add_alternative(messageText, subtype="html")
 
-    fp =  open("./data/patron.png", "rb") 
+    fp =  open(os.getcwd() + "/data/patron.png", "rb") 
     img_data = fp.read()
     msg.add_attachment(img_data, maintype = "png",subtype = "pdf", filename = "patron.png")
 

@@ -48,6 +48,6 @@ class patronGen():
             ax.axvline(0.49 + i,c = "black",linewidth = 0.8)
             ax.axhline(0.49 + i,c = "black",linewidth = 0.8)
 
-        plt.savefig("./data/patron.png")
+        plt.savefig(os.getcwd() + "/data/patron.png")
         plt.close(fig)
 

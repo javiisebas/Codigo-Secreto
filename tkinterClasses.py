@@ -17,7 +17,7 @@ class MsgBox(Toplevel):
         self.label["bg"] = "white"
         self.label.pack(ipadx=50, ipady=10, fill="both", expand=True)
 
-        self.button = Button(self, text="Close")
+        self.button = Button(self, text="Cerrar")
         self.button["command"] = self.destroy
         self.button.pack(pady=10, padx=10, ipadx=20, side="left")
 
@@ -30,13 +30,14 @@ class mainAppWin():
         self.window.title("Menú Codigo Secreto")
         self.xRes = self.window.winfo_screenwidth()
         self.yRes = self.window.winfo_screenheight()
+        self.decision = False
 
-        self.dir = "./data/icon.png"
+        self.dir = os.getcwd() + "/data/icon.png"
         self.imgicon = tk.PhotoImage(file=self.dir)
         self.window.tk.call("wm", "iconphoto", self.window._w, self.imgicon) 
 
         self.mails = []
-        self.list_words = io.open("./data/palabras.txt", mode="r", encoding="utf-8")
+        self.list_words = io.open(os.getcwd() + "/data/palabras.txt", mode="r", encoding="utf-8")
         self.words = self.list_words.read().split('\n')
         self.tam = len(self.words) - 1
 
@@ -60,7 +61,8 @@ class mainAppWin():
         self.txtAdd.place(x=60, y=143)
         self.txtAdd.config(font=("Verdana",11)) 
         
-        self.btnAdd = tk.Button(self.window, text="Añadir", bg="#F5DEB3", command=self.add, width = 13) 
+        self.btnAdd = tk.Button(self.window, text="Añadir", bg="#8D8D8D", fg="white", 
+                command=self.add, width = 13) 
         self.btnAdd.place(x=400, y=138)
         self.btnAdd.config(font=("Verdana",11))
 
@@ -88,19 +90,23 @@ class mainAppWin():
         self.txt.place(x=60, y=403)
         self.txt.config(font=("Verdana",11))
 
-        self.btnIncluir = tk.Button(self.window, text="Incluir", bg="#F5DEB3", command=self.incluir, width = 13) 
+        self.btnIncluir = tk.Button(self.window, text="Incluir", bg="#8D8D8D", fg="white", 
+                command=self.incluir, width = 13) 
         self.btnIncluir.place(x=400, y=398)
         self.btnIncluir.config(font=("Verdana",11))
         
-        self.btnVer = tk.Button(self.window, text="Ver Correos", bg="#F5DEB3", command=self.ver, width = 14) 
+        self.btnVer = tk.Button(self.window, text="Ver Correos", bg="#8D8D8D", fg="white", 
+                command=self.ver, width = 14) 
         self.btnVer.place(x=60, y=450)
         self.btnVer.config(font=("Verdana",11))
 
-        self.btnIncluir = tk.Button(self.window, text="Eliminar", bg="#F5DEB3", command=self.eliminar, width = 14) 
+        self.btnIncluir = tk.Button(self.window, text="Eliminar", bg="#8D8D8D", fg="white",
+            command=self.eliminar, width = 14) 
         self.btnIncluir.place(x=212, y=450)
         self.btnIncluir.config(font=("Verdana",11))
 
-        self.btnEnviar = tk.Button(self.window, text="Comenzar Juego", bg="red", fg="white", command=self.enviar, width = 17) 
+        self.btnEnviar = tk.Button(self.window, text="Comenzar Juego", bg="#DC143C", fg="white",
+                  command=self.enviar, width = 17) 
         self.btnEnviar.place(x=365, y=450)
         self.btnEnviar.config(font=("Verdana",11))
 
@@ -108,19 +114,23 @@ class mainAppWin():
         self.menubar = Menu(self.window)
 
         self.filemenu = Menu(self.menubar, tearoff=0)
-        self.filemenu.add_command(label="Salir", command=self.exit)
-        self.menubar.add_cascade(label="Configuración", menu=self.filemenu)
-
-        self.helpmenu = Menu(self.menubar, tearoff=0)
-        self.helpmenu.add_command(label="Información", command=self.about)
-        self.menubar.add_cascade(label="Creador", menu=self.helpmenu)
+        self.filemenu.add_command(label="Reglas del Juego", command=self.reglas, font=("Verdana", 10))
+        self.filemenu.add_command(label="Información del Creador", command=self.about, font=("Verdana", 10))
+        self.filemenu.add_separator()
+        self.filemenu.add_command(label="Salir", command=self.exit, font=("Verdana", 10))
+        self.menubar.add_cascade(label="Información Adicional", menu=self.filemenu, font=("Verdana", 11))
 
         self.window.config(menu=self.menubar)
                 
         self.window.mainloop()
         
 
+    def reglas(self):
+        os.startfile(os.getcwd() + "/data/Codigo_Secreto_Reglas.pdf")
+
+
     def exit(self):
+        self.decision = False
         self.window.destroy()
 
 
@@ -149,11 +159,13 @@ class mainAppWin():
 
 
     def eliminar(self):
-        decision = messagebox.askyesno(message="¿Está seguro de añadir \neliminar los correo ?" 
-                               , title="Eliminar Correos")
-        if decision:
-            self.mails = []
-
+        if len(self.mails) > 0:
+            decision = messagebox.askyesno(message="¿Está seguro de querer eliminar\n el último correo añadido ?" 
+                                   , title="Eliminar Correos")
+            if decision:
+                self.mails = self.mails[:-1]
+        else:
+            messagebox.showinfo(message="Ningún correo ha sido \nañadido a la lista todavía", title="Mensaje de advertencia")
 
     def ver(self):
         global MsgBox
@@ -172,15 +184,28 @@ class mainAppWin():
 
     def add(self):
 
-        nueva = messagebox.askyesno(message="¿Está seguro de añadir \nla palabra '"+self.txtAdd.get()+"'?" 
-                               , title="Nueva palabra")
-        if nueva:
-            if self.txtAdd.get() in self.words:
-                messagebox.showinfo(message="Esta palabra ya existe", title="Mensaje de advertencia")
-            else:
-                listaEscribe = open('./data/palabras.txt', mode="a+", encoding="utf-8")
-                listaEscribe.write(self.txtAdd.get())
-                listaEscribe.close()  
+        if self.txtAdd.get() != "" and self.txtAdd.get() != " ":
+            nueva = messagebox.askyesno(message="¿Está seguro de añadir \nla palabra '"+self.txtAdd.get()+"'?" 
+                                   , title="Nueva palabra")
+            if nueva:
+                if self.txtAdd.get() in self.words:
+                    messagebox.showinfo(message="Esta palabra ya existe", title="Mensaje de advertencia")
+                else:
+                    try:
+                        listaEscribe = open(os.getcwd() + "/data/palabras.txt", mode="a+", encoding="utf-8")
+                        listaEscribe.write(self.txtAdd.get())
+                        listaEscribe.close() 
+
+                        messagebox.showinfo(message="La palabra ha sido \nincluida con exito",
+                            title="Mensaje de advertencia") 
+
+                    except Exception:
+                        messagebox.showinfo(message="Algo ha fallado",
+                            title="Mensaje de advertencia")
+
+        else:
+            messagebox.showinfo(message="Necesita escribir alguna \npalabra para poder incluirla",
+             title="Mensaje de advertencia") 
 
         self.txtAdd.delete(0, "end")
         
@@ -204,6 +229,6 @@ class mainAppWin():
         if len(self.mails) == 0:
             messagebox.showinfo(message="Necesita incluir algún \ncorreo para poder enviar", title="Mensaje de advertencia")
         else:
-            messagebox.showinfo(message="A jugar!", title="Mensaje de advertencia")
+            self.decision = True
             self.window.destroy()
 

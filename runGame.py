@@ -234,6 +234,7 @@ class salir(object):
         self.run = True
         self.decision = True
         self.reiniciar = True
+        self.estado = False
 
     def draw(self, win):
         cuadroTexto(win,50,(0,0,0),(0,self.yRes*0.895),(self.xRes1,0.15*self.yRes)
@@ -251,6 +252,7 @@ class salir(object):
                     ,"NUEVO JUEGO",(0,0,0),(self.xRes1//2,self.yRes1))
                 if pygame.mouse.get_pressed()[0]:
                     self.reiniciar = True
+                    self.estado = True
 
 
         if self.ratonY > 0.895*self.yRes and self.ratonY < self.yRes:
@@ -270,9 +272,19 @@ class cargando(object):
     def __init__(self, res):
         self.xRes = res[0]
         self.yRes = 0.9 * res[1]
-        self.msg = "CARGANDO"
+        self.estado = True
 
     def draw(self, win):
-        cuadroTexto(win,150,(245,222,179),(0,0),(self.xRes,self.yRes)
-                    ,self.msg,(0,0,0),(self.xRes//2,self.yRes//2))
+        if self.estado:
+            cuadroTexto(win,150,(245,222,179),(0,0),(self.xRes,self.yRes//2)
+                    ,"CARGANDO",(0,0,0),(self.xRes//2,0.85*self.yRes//2))
+            cuadroTexto(win,30,(245,222,179),(0,self.yRes//2),(self.xRes,self.yRes//2)
+                    ,"ESC para salir del modo pantalla completa",(0,0,0),(self.xRes//2,1.35*self.yRes//2))
+
+        elif not(self.estado):
+            cuadroTexto(win,150,(245,222,179),(0,0),(self.xRes,self.yRes//2)
+                    ,"ALGO HA",(0,0,0),(self.xRes//2,0.75*self.yRes//2))
+            cuadroTexto(win,150,(245,222,179),(0,self.yRes//2),(self.xRes,self.yRes//2)
+                    ,"FALLADO",(0,0,0),(self.xRes//2,1.25*self.yRes//2))
+
         

@@ -7,9 +7,9 @@ from wordsListCreator import *
 
 os.environ["SDL_VIDEO_WINDOW_POS"] = "%d,%d" % (0, 0)
 
-DameCorreos = mainAppWin(MsgBox)
-xResolution = DameCorreos.xRes
-yResolution = DameCorreos.yRes
+MenuApp = mainAppWin(MsgBox)
+xResolution = MenuApp.xRes
+yResolution = MenuApp.yRes
 
 res = xResolution, yResolution
 palabras_repetidas = []
@@ -22,23 +22,23 @@ def generaInfo(mails, palabras_repetidas):
     original_matrix = patron_generator.original_matrix
 
     enviaCorreo(mails) 
-    remove("./data/patron.png")
+    remove(os.getcwd() + "/data/patron.png")
     palabras_juego = wordsList(palabras_repetidas)
 
     return original_matrix, palabras_juego
 
 
-decision = True
+decision = MenuApp.decision
 while decision:
     
-    if len(DameCorreos.mails) > 0:
+    if len(MenuApp.mails) > 0:
 
         pygame.init()
 
         win = pygame.display.set_mode(res)
         pygame.key.set_mods(0) 
  
-        icon = pygame.image.load("./data/icon.png")
+        icon = pygame.image.load(os.getcwd() + "/data/icon.png")
         pygame.display.set_icon(icon)
         pygame.display.set_caption("Código Secreto")
 
@@ -51,6 +51,9 @@ while decision:
 
             Salir.draw(win)
             if Salir.run:
+                if not(Cargando.estado):
+                    Cargando.estado = Salir.estado
+
                 Cargando.draw(win)
                 if not(Salir.reiniciar):
                     Matriz.posicion(win, Muerto, original_matrix)
@@ -73,9 +76,10 @@ while decision:
 
             redrawWin()
 
-            if Salir.reiniciar:
+            if Salir.reiniciar and Cargando.estado:
+                Salir.estado = False
                 try:
-                    info = generaInfo(DameCorreos.mails, palabras_repetidas)
+                    info = generaInfo(MenuApp.mails, palabras_repetidas)
 
                     original_matrix = info[0]
                     palabras_juego = info[1]
@@ -93,7 +97,7 @@ while decision:
                     Salir.reiniciar = False
                     
                 except Exception:
-                    Cargando.msg = "CONEXIÓN FALLIDA"
+                    Cargando.estado = False
 
             run = Salir.run
 
